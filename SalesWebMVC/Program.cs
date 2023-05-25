@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SalesWebMVC.Data;
+using SalesWebMVC.Services;
 using static System.Formats.Asn1.AsnWriter;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ options.UseMySql(builder.Configuration.GetConnectionString("SalesWebMVCContext")
  ?? throw new InvalidOperationException("Connection string 'SalesWebMVCContext' not found.")));
 
 builder.Services.AddScoped<SeedingService>();
+builder.Services.AddScoped<SellerService>();
 
 
 // Add services to the container.
