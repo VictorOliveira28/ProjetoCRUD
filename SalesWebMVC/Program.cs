@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SalesWebMVC.Data;
 using SalesWebMVC.Services;
 using static System.Formats.Asn1.AsnWriter;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<SalesWebMVCContext>(options =>
@@ -19,6 +21,16 @@ builder.Services.AddScoped<DepartmentService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+var enUs = new CultureInfo("en-US");
+
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en-US"),
+    SupportedCultures = new List<CultureInfo> { enUs },
+    SupportedUICultures = new List<CultureInfo> { enUs }
+};
+app.UseRequestLocalization(localizationOptions);
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
